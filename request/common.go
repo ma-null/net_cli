@@ -2,25 +2,26 @@ package request
 
 import (
 	"net/http"
+	"strings"
 )
 
 type Params struct {
-  NetIfVersion string
-  Server string
-  Port  string
+	NetIfVersion string
+	Server       string
+	Port         string
 }
 
-func CreateRequest(pr Params, str string) (*http.Response, error) {
-	url:=""
-	if str =="/version"{
-		url="http://localhost:8080/service/"+str	
-	} else {
-		url="http://"+pr.Server+":"+pr.Port+"/service/"+str	
-	}	
+func CreateRequestURL(pr Params, requestPath string) string {
+	if pr.Version != "" {
+		return strings.Join([]string{"http://" + pr.Server + ":" + pr.Port, "service", pr.NetIfVersion, requestPath}, "/")
+	}
+	return strings.Join([]string{"http://" + pr.Server + ":" + pr.Port, "service", requestPath}, "/")
+}
+
+func MakeRequest(url string) (*http.Response, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return  nil, err
+		return nil, err
 	}
 	return resp, nil
-	
 }

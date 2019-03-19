@@ -1,14 +1,13 @@
 package request
 
 import (
-  "io/ioutil"
-  "encoding/json"
-  "github.com/ma-null/NetInterface/handlers"
+	"encoding/json"
+	"github.com/ma-null/NetInterface/handlers"
+	"io/ioutil"
 )
 
 func InterfaceInfoRequest(name string, pr Params) (handlers.NetInterface, error) {
-	str:= pr.NetIfVersion+"/interface/"+name
-	resp, err := CreateRequest(pr, str)
+	resp, err := MakeRequest(CreateRequestURL(pr, "interface/" + name))
 	if err != nil {
 		return handlers.NetInterface{}, err
 	}
@@ -18,7 +17,7 @@ func InterfaceInfoRequest(name string, pr Params) (handlers.NetInterface, error)
 		return handlers.NetInterface{}, err
 	}
 
-  var netIf handlers.NetInterface
+	var netIf handlers.NetInterface
 	if err = json.Unmarshal(body, &netIf); err != nil {
 		return handlers.NetInterface{}, err
 	}
