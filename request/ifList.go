@@ -1,19 +1,17 @@
 package request
 
 import (
-  "net/http"
   "io/ioutil"
   "encoding/json"
-
   "github.com/ma-null/NetInterface/handlers"
 )
 
 func InterfaceListRequest(pr Params) (handlers.IfResponse, error) {
-	resp, err := http.Get(CreateRequest(pr))
+	str:= pr.NetIfVersion+"/interfaces"
+	resp, err := CreateRequest(pr,str)
 	if err != nil {
-		return  handlers.IfResponse{}, err
+		return handlers.IfResponse{}, err
 	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return handlers.IfResponse{}, err

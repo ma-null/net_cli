@@ -1,18 +1,15 @@
 package request
 
 import (
-  "fmt"
-  "net/http"
   "io/ioutil"
   "encoding/json"
-
   "github.com/ma-null/NetInterface/handlers"
 )
 
 func InterfaceInfoRequest(name string, pr Params) (handlers.NetInterface, error) {
-	resp, err := http.Get(CreateRequest(pr)) // to do server and port is a key
+	str:= pr.NetIfVersion+"/interface/"+name
+	resp, err := CreateRequest(pr, str)
 	if err != nil {
-    fmt.Println(err.Error())
 		return handlers.NetInterface{}, err
 	}
 

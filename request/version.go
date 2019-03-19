@@ -1,15 +1,14 @@
 package request
 
 import (
-  "net/http"
   "io/ioutil"
   "encoding/json"
-
   "github.com/ma-null/NetInterface/handlers"
 )
 
 func VersionRequest(pr Params) (handlers.VerResponse, error) {
-	resp, err := http.Get(CreateRequest(pr))
+	str:="/version"
+	resp, err := CreateRequest(pr, str)
 	if err != nil {
 		return  handlers.VerResponse{}, err
 	}
