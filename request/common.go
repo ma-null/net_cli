@@ -12,7 +12,7 @@ type Params struct {
 }
 
 func CreateRequestURL(pr Params, requestPath string) string {
-	if pr.Version != "" {
+	if pr.NetIfVersion != "" {
 		return strings.Join([]string{"http://" + pr.Server + ":" + pr.Port, "service", pr.NetIfVersion, requestPath}, "/")
 	}
 	return strings.Join([]string{"http://" + pr.Server + ":" + pr.Port, "service", requestPath}, "/")
