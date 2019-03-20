@@ -4,9 +4,9 @@ import (
   "log"
   "os"
   "fmt"
-  "net_cli/request"
+  "/github.com/ma-null/net_cli/request"
   "github.com/urfave/cli"
-	"strings"
+  "strings"
 )
 
 func main() {
