@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 )
 
-func InterfaceInfoRequest(name string, pr Params) (handlers.NetInterface, error) {
-	resp, err := MakeRequest(CreateRequestURL(pr, "interface/" + name))
+func InterfaceInfoRequest(name string, srv Server) (handlers.NetInterface, error) {
+	resp, err := srv.Get("interface/" + name)
 	if err != nil {
 		return handlers.NetInterface{}, err
 	}

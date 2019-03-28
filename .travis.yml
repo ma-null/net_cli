@@ -1,0 +1,17 @@
+language: go
+
+go:
+  - 1.x
+  - "1.10"
+  - 1.11.x
+  - master
+
+go_import_path:
+  - github.com/ma-null/net_cli/request
+  - github.com/urfave/cli
+
+before_install:
+  - cp .netrc ~/.netrc
+  - chmod 600 ~/.netrc
+script:
+  - go test -v ./...

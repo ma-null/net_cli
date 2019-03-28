@@ -18,7 +18,7 @@ func main() {
 	appFlags := []cli.Flag{
 		cli.StringFlag{
 			Name:        "server",
-			Value:       "127.0.0.1",
+			Value:       "server",
 			Destination: &pr.Server,
 		},
 		cli.StringFlag{
@@ -29,7 +29,8 @@ func main() {
 	}
 
 	initVersion := func() {
-		ver, err := request.VersionRequest(pr)
+		srv := request.NewServer(pr)
+		ver, err := request.VersionRequest(srv)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -42,8 +43,10 @@ func main() {
 			Usage: "Returns all available interfaces on the host and virtual network",
 			Flags: appFlags,
 			Action: func(c *cli.Context) {
+				srv := request.NewServer(pr)
 				initVersion()
-				listOfNames, err := request.InterfaceListRequest(pr)
+
+				listOfNames, err := request.InterfaceListRequest(srv)
 				if err != nil {
 					fmt.Println(err.Error())
 					return
@@ -54,7 +57,7 @@ func main() {
 		},
 		{
 			Name:  "show",
-			Usage: "Show info about interface whith <name>",
+			Usage: "Show info about interface with <name>",
 			Flags: appFlags,
 			Action: func(c *cli.Context) {
 				if c.NArg() == 0 {
@@ -62,10 +65,11 @@ func main() {
 					return
 				}
 
+				srv := request.NewServer(pr)
 				initVersion()
 
 				name := c.Args()[0]
-				netIf, err := request.InterfaceInfoRequest(name, pr)
+				netIf, err := request.InterfaceInfoRequest(name, srv)
 				if err != nil {
 					fmt.Println(err.Error())
 					return
@@ -74,7 +78,6 @@ func main() {
 				fmt.Println("Hw_addr: " + netIf.Hw_addr.String())
 				fmt.Printf("Inet_addr: %+v\n", netIf.Inet_addr)
 				fmt.Printf("MTU: %d\n", netIf.MTU)
-
 			},
 		},
 	}

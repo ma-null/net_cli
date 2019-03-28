@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 )
 
-func InterfaceListRequest(pr Params) (handlers.IfResponse, error) {
-	resp, err := MakeRequest(CreateRequestURL(pr, "interfaces"))
+func InterfaceListRequest(srv Server) (handlers.IfResponse, error) {
+	resp, err := srv.Get( "interfaces")
 	if err != nil {
 		return handlers.IfResponse{}, err
 	}

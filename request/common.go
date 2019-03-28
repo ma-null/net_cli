@@ -11,17 +11,29 @@ type Params struct {
 	Port         string
 }
 
-func CreateRequestURL(pr Params, requestPath string) string {
+func createRequestURL(pr Params, requestPath string) string {
 	if pr.NetIfVersion != "" {
 		return strings.Join([]string{"http://" + pr.Server + ":" + pr.Port, "service", pr.NetIfVersion, requestPath}, "/")
 	}
 	return strings.Join([]string{"http://" + pr.Server + ":" + pr.Port, "service", requestPath}, "/")
 }
 
-func MakeRequest(url string) (*http.Response, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
+type (
+	Server interface {
+		Get(requestPath string) (*http.Response, error)
 	}
-	return resp, nil
+
+	server struct {
+		pr Params
+	}
+)
+
+func NewServer(pr Params) Server {
+	return &server{pr}
 }
+
+func (s *server) Get(requestPath string) (*http.Response, error) {
+	reqURL := createRequestURL(s.pr, requestPath)
+	return http.Get(reqURL)
+}
+

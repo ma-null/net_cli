@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 )
 
-func VersionRequest(pr Params) (handlers.VerResponse, error) {
-	resp, err := MakeRequest(CreateRequestURL(pr, "version"))
+func VersionRequest(srv Server) (handlers.VerResponse, error) {
+	resp, err := srv.Get( "version")
 	if err != nil {
 		return handlers.VerResponse{}, err
 	}
