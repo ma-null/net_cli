@@ -6,12 +6,12 @@ go:
   - 1.11.x
   - master
 
-go_import_path:
-  - github.com/ma-null/net_cli/request
-  - github.com/urfave/cli
-
 before_install:
   - cp .netrc ~/.netrc
-  - chmod 600 ~/.netrc
+
+install:
+  - go get github.com/ma-null/net_cli/request
+  - go get github.com/urfave/cli
+
 script:
   - go test -v ./...
