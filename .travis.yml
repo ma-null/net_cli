@@ -1,10 +1,14 @@
 language: go
 
 go:
-  - 1.x
-  - "1.10"
-  - 1.11.x
-  - master
+  - 1.12
+
+env:
+  global:
+    - IMAGE_NAME=manuller/netcli
+
+services:
+  - docker
 
 before_install:
   - cp .netrc ~/.netrc
@@ -15,3 +19,5 @@ install:
 
 script:
   - go test -v ./...
+  - go build .
+  - bash push.sh
