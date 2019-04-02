@@ -4,7 +4,7 @@ import (
   "log"
   "os"
   "fmt"
-  "./request"
+  "github.com/ma-null/NetInterface/request"
   "github.com/urfave/cli"
   "strings"
 )
