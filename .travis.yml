@@ -21,3 +21,6 @@ script:
   - go test -v ./...
   - go build .
   - bash push.sh
+
+notifications:
+  email: false

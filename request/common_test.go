@@ -24,3 +24,8 @@ func NewMockServer(pr Params, mockGet func(requestPath string) (*http.Response, 
 func (s *mockServer) Get(requestPath string) (*http.Response, error) {
 	return s.mockGet(requestPath)
 }
+
+func (s *mockServer) UpdateVersion() error {
+	s.pr.NetIfVersion = "v1"
+	return nil
+}
